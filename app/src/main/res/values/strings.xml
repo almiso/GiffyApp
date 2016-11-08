@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Giffy</string>
+    <!--Common-->
+    <string name="st_app_name">Giffy</string>
+    <string name="st_loading">Loading</string>
+
+    <!--Jokes activity-->
+    <string name="st_next_joke">Next joke</string>
 </resources>
