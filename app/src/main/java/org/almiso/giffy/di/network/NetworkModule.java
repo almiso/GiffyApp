@@ -1,8 +1,8 @@
 package org.almiso.giffy.di.network;
 
 
-import org.almiso.giffy.network.core.TaskManager;
-import org.almiso.giffy.network.realisation.GiffyNetworkTaskManager;
+import org.almiso.giffy.network.core.manager.TaskManager;
+import org.almiso.giffy.network.realisation.manager.GiffyNetworkTaskManager;
 
 import javax.inject.Singleton;
 

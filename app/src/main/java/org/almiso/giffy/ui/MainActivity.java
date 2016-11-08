@@ -5,16 +5,15 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
-import org.almiso.giffy.App;
+import org.almiso.giffy.core.GiffyApplication;
 import org.almiso.giffy.R;
-import org.almiso.giffy.network.core.ProgressInterface;
-import org.almiso.giffy.network.core.TaskManager;
-import org.almiso.giffy.network.realisation.GiffyError;
-import org.almiso.giffy.network.realisation.GiffyNetworkRequest;
-import org.almiso.giffy.network.realisation.GiffyRequestCallback;
-import org.almiso.giffy.network.sample.GetRandomJokeResponse;
-import org.almiso.giffy.network.sample.GiffyApi;
-import org.almiso.giffy.network.sample.Joke;
+import org.almiso.giffy.network.core.manager.TaskManager;
+import org.almiso.giffy.network.realisation.api.GiffyApi;
+import org.almiso.giffy.network.realisation.model.GetRandomJokeResponse;
+import org.almiso.giffy.network.realisation.model.Joke;
+import org.almiso.giffy.network.realisation.request.GiffyRequest;
+import org.almiso.giffy.network.realisation.task.GiffyError;
+import org.almiso.giffy.network.realisation.task.GiffyTaskCallback;
 import org.almiso.giffy.utils.Logger;
 
 import java.util.Random;
@@ -56,26 +55,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initData() {
-        App.getNetworkComponent().inject(this);
+        GiffyApplication.getNetworkComponent().inject(this);
     }
 
     /* Private methods */
 
     private void loadNextJoke() {
-        GiffyNetworkRequest request = GiffyApi.test().getJokeForName("Alexandr", "Sosorev");
-        request.setProgressInterface(new ProgressInterface() {
-            @Override
-            public void showProgress() {
-                needShowProgress();
-            }
-
-            @Override
-            public void hideProgress() {
-                needHideProgress();
-            }
-        });
-
-        request.setCallback(new GiffyRequestCallback<GetRandomJokeResponse>() {
+        GiffyRequest request = GiffyApi.test().getRandomJoke();
+        request.setProgressInterface(getTaskProgressInterface());
+        request.setCallback(new GiffyTaskCallback<GetRandomJokeResponse>() {
             @Override
             public void onSuccess(@NonNull GetRandomJokeResponse response) {
                 Joke joke = response.getJoke();
