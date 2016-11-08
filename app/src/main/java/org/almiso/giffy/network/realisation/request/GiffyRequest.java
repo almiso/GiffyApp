@@ -1,53 +1,82 @@
 package org.almiso.giffy.network.realisation.request;
 
-
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 
-import org.almiso.giffy.network.core.task.imp.EmptyTaskProgressInterface;
-import org.almiso.giffy.network.core.task.TaskProgressInterface;
+import org.almiso.giffy.network.core.client.NetworkClient;
+import org.almiso.giffy.network.core.client.ServerCallback;
+import org.almiso.giffy.network.core.client.ServerResponse;
 import org.almiso.giffy.network.core.parser.DefaultRequestParser;
-import org.almiso.giffy.network.core.request.imp.EmptyTaskCallback;
+import org.almiso.giffy.network.core.parser.ParseException;
+import org.almiso.giffy.network.core.parser.RequestParser;
+import org.almiso.giffy.network.core.request.Request;
+import org.almiso.giffy.network.core.request.RequestHeaders;
+import org.almiso.giffy.network.core.request.RequestParams;
+import org.almiso.giffy.network.core.request.RequestPath;
 import org.almiso.giffy.network.core.request.imp.EmptyRequestHeaders;
 import org.almiso.giffy.network.core.request.imp.EmptyRequestParams;
 import org.almiso.giffy.network.core.request.imp.EmptyRequestPath;
-import org.almiso.giffy.network.core.client.NetworkClient;
-import org.almiso.giffy.network.core.request.Request;
-import org.almiso.giffy.network.core.parser.ParseException;
+import org.almiso.giffy.network.core.request.imp.EmptyTaskCallback;
 import org.almiso.giffy.network.core.task.TaskCallback;
 import org.almiso.giffy.network.core.task.TaskError;
-import org.almiso.giffy.network.core.request.RequestHeaders;
-import org.almiso.giffy.network.core.request.RequestParams;
-import org.almiso.giffy.network.core.parser.RequestParser;
-import org.almiso.giffy.network.core.request.RequestPath;
-import org.almiso.giffy.network.core.task.TaskResponse;
-import org.almiso.giffy.network.core.client.ServerCallback;
-import org.almiso.giffy.network.core.client.ServerResponse;
 import org.almiso.giffy.network.core.task.TaskIdentifier;
+import org.almiso.giffy.network.core.task.TaskProgressInterface;
+import org.almiso.giffy.network.core.task.TaskResponse;
 import org.almiso.giffy.network.core.task.TaskType;
+import org.almiso.giffy.network.core.task.imp.EmptyTaskProgressInterface;
+import org.almiso.giffy.network.realisation.client.GiffyNetworkClient;
 import org.almiso.giffy.network.realisation.task.GiffyError;
 import org.almiso.giffy.network.realisation.task.GiffyTaskIdentifier;
-import org.almiso.giffy.network.realisation.client.GiffyNetworkClient;
-
 
 public abstract class GiffyRequest implements Request {
 
+    /* Constants */
+
+    private static final int DEFAULT_ATTEMPTS_COUNT = 1;
+    private static final int DEFAULT_USED_ATTEMPTS_COUNT = 0;
+
     /* Data */
 
-    private Handler mainThreadHandler;
+    /**
+     * Looper which starts request
+     */
+    private Looper looper;
 
+    /**
+     * UI progress interface.
+     */
     private TaskProgressInterface taskProgressInterface;
+
+    /**
+     * Request callback.
+     */
     private TaskCallback taskCallback;
+
+    /**
+     * Request parser.
+     */
     private RequestParser requestParser;
+
+    /**
+     * Specify attempts for request loading if caused HTTP-error. 0 for infinite
+     */
+    private int attempts;
+
+    /**
+     * How much times request was loaded
+     */
+    private int attemptsUsed;
 
     /* Constructor */
 
     protected GiffyRequest() {
-        this.mainThreadHandler = new Handler(Looper.getMainLooper());
         this.taskProgressInterface = new EmptyTaskProgressInterface();
         this.taskCallback = new EmptyTaskCallback();
         this.requestParser = new DefaultRequestParser();
+        this.attempts = DEFAULT_ATTEMPTS_COUNT;
+        this.attempts = DEFAULT_USED_ATTEMPTS_COUNT;
+        this.looper = Looper.getMainLooper();
     }
 
     /* Override methods */
@@ -60,6 +89,11 @@ public abstract class GiffyRequest implements Request {
     @Override
     final public void setProgressInterface(@NonNull TaskProgressInterface taskProgressInterface) {
         this.taskProgressInterface = taskProgressInterface;
+    }
+
+    @Override
+    public void setAttemptsCount(int attempts) {
+        this.attempts = attempts;
     }
 
     @Override
@@ -180,6 +214,6 @@ public abstract class GiffyRequest implements Request {
     }
 
     private void runOnMainThread(Runnable runnable) {
-        mainThreadHandler.post(runnable);
+        new Handler(looper).post(runnable);
     }
 }

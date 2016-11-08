@@ -38,4 +38,9 @@ public interface Request extends Task {
      * Returns the {@link RequestPath path}.
      */
     Class<? extends TaskResponse> getResponseClass();
+
+    /**
+     * Specify attempts for request loading if caused HTTP-error. 0 for infinite.
+     */
+    void setAttemptsCount(int attemps);
 }

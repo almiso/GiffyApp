@@ -63,6 +63,7 @@ public class MainActivity extends BaseActivity {
     private void loadNextJoke() {
         GiffyRequest request = GiffyApi.test().getRandomJoke();
         request.setProgressInterface(getTaskProgressInterface());
+        request.setAttemptsCount(10);
         request.setCallback(new GiffyTaskCallback<GetRandomJokeResponse>() {
             @Override
             public void onSuccess(@NonNull GetRandomJokeResponse response) {
