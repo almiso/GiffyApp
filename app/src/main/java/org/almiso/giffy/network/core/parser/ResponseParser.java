@@ -1,12 +1,13 @@
 package org.almiso.giffy.network.core.parser;
 
+import org.almiso.giffy.network.core.exceprion.ParseException;
 import org.almiso.giffy.network.core.job.JobResponse;
 import org.almiso.giffy.network.core.client.ServerResponse;
 
 /**
- * Default realisation of the {@link RequestParser RequestParser}.
+ * Default realisation of the {@link Parser Parser}.
  */
-public class DefaultRequestParser implements RequestParser {
+public class ResponseParser implements Parser {
 
     @Override
     public JobResponse parse(ServerResponse serverResponse, Class<? extends JobResponse> responseClass) throws ParseException {
@@ -15,10 +16,10 @@ public class DefaultRequestParser implements RequestParser {
             return response.parse(serverResponse);
         } catch (InstantiationException e) {
             e.printStackTrace();
-            throw new ParseException();
+            throw new ParseException(e);
         } catch (IllegalAccessException ex) {
             ex.printStackTrace();
-            throw new ParseException();
+            throw new ParseException(ex);
         }
     }
 }

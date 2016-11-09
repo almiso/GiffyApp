@@ -4,13 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.almiso.giffy.R;
 import org.almiso.giffy.core.GiffyApplication;
+import org.almiso.giffy.network.core.job.JobError;
 import org.almiso.giffy.network.core.manager.JobManager;
 import org.almiso.giffy.network.core.request.NetworkRequest;
 import org.almiso.giffy.network.implementation.api.GiffyApi;
-import org.almiso.giffy.network.implementation.job.GiffyError;
+import org.almiso.giffy.network.implementation.error.CustomError;
 import org.almiso.giffy.network.implementation.job.GiffyJobCallback;
 import org.almiso.giffy.network.implementation.model.GetRandomJokeResponse;
 import org.almiso.giffy.network.implementation.model.Joke;
@@ -72,8 +74,14 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(@NonNull GiffyError error) {
+            public void onError(@NonNull JobError error) {
+                if (error instanceof CustomError) {
+                    CustomError customError = (CustomError) error;
+                    customError.getResponse();
+                }
+
                 Logger.d(TAG, "error: " + error);
+                showToast(error.getErrorMessage());
             }
         });
         manager.addToQueue(request);
@@ -83,4 +91,12 @@ public class MainActivity extends BaseActivity {
             manager.removeFromQueue(request.getIdentifier());
         }
     }
+
+    /* Util methods */
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+
 }

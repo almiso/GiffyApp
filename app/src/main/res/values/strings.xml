@@ -5,4 +5,10 @@
 
     <!--Jokes activity-->
     <string name="st_next_joke">Next joke</string>
+
+    <!--Errors-->
+    <string name="st_error_unknown">Unknown error</string>
+    <string name="st_error_bad_url">Bad URL</string>
+    <string name="st_error_http">An network error occurred</string>
+    <string name="st_error_parse">Error on parsing</string>
 </resources>

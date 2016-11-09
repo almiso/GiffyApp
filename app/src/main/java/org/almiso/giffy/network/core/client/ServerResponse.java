@@ -1,6 +1,6 @@
 package org.almiso.giffy.network.core.client;
 
-import org.almiso.giffy.network.core.parser.ParseException;
+import org.almiso.giffy.network.core.exceprion.ParseException;
 
 /**
  * Base server response.
