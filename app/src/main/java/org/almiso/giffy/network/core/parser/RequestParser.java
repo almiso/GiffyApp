@@ -1,6 +1,6 @@
 package org.almiso.giffy.network.core.parser;
 
-import org.almiso.giffy.network.core.task.TaskResponse;
+import org.almiso.giffy.network.core.job.JobResponse;
 import org.almiso.giffy.network.core.client.ServerResponse;
 
 /**
@@ -11,5 +11,5 @@ public interface RequestParser {
     /**
      * Parse server response to the model class.
      */
-    TaskResponse parse(ServerResponse response, Class<? extends TaskResponse> responseClass) throws ParseException;
+    JobResponse parse(ServerResponse response, Class<? extends JobResponse> responseClass) throws ParseException;
 }

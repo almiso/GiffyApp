@@ -5,15 +5,15 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
-import org.almiso.giffy.core.GiffyApplication;
 import org.almiso.giffy.R;
-import org.almiso.giffy.network.core.manager.TaskManager;
-import org.almiso.giffy.network.realisation.api.GiffyApi;
-import org.almiso.giffy.network.realisation.model.GetRandomJokeResponse;
-import org.almiso.giffy.network.realisation.model.Joke;
-import org.almiso.giffy.network.realisation.request.GiffyRequest;
-import org.almiso.giffy.network.realisation.task.GiffyError;
-import org.almiso.giffy.network.realisation.task.GiffyTaskCallback;
+import org.almiso.giffy.core.GiffyApplication;
+import org.almiso.giffy.network.core.manager.JobManager;
+import org.almiso.giffy.network.core.request.NetworkRequest;
+import org.almiso.giffy.network.implementation.api.GiffyApi;
+import org.almiso.giffy.network.implementation.job.GiffyError;
+import org.almiso.giffy.network.implementation.job.GiffyJobCallback;
+import org.almiso.giffy.network.implementation.model.GetRandomJokeResponse;
+import org.almiso.giffy.network.implementation.model.Joke;
 import org.almiso.giffy.utils.Logger;
 
 import java.util.Random;
@@ -29,7 +29,7 @@ public class MainActivity extends BaseActivity {
     /* Controls */
 
     @Inject
-    TaskManager manager;
+    JobManager manager;
 
     /* Common methods */
 
@@ -61,10 +61,10 @@ public class MainActivity extends BaseActivity {
     /* Private methods */
 
     private void loadNextJoke() {
-        GiffyRequest request = GiffyApi.test().getRandomJoke();
-        request.setProgressInterface(getTaskProgressInterface());
+        NetworkRequest request = GiffyApi.test().getRandomJoke();
+        request.setJobProgressState(getTaskProgressInterface());
         request.setAttemptsCount(10);
-        request.setCallback(new GiffyTaskCallback<GetRandomJokeResponse>() {
+        request.setCallback(new GiffyJobCallback<GetRandomJokeResponse>() {
             @Override
             public void onSuccess(@NonNull GetRandomJokeResponse response) {
                 Joke joke = response.getJoke();
@@ -76,11 +76,11 @@ public class MainActivity extends BaseActivity {
                 Logger.d(TAG, "error: " + error);
             }
         });
-        manager.executeTask(request);
+        manager.addToQueue(request);
 
         Random random = new Random();
         if (random.nextBoolean()) {
-            manager.cancelTask(request.getIdentifier());
+            manager.removeFromQueue(request.getIdentifier());
         }
     }
 }

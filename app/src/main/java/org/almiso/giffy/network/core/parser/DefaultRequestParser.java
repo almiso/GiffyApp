@@ -1,6 +1,6 @@
 package org.almiso.giffy.network.core.parser;
 
-import org.almiso.giffy.network.core.task.TaskResponse;
+import org.almiso.giffy.network.core.job.JobResponse;
 import org.almiso.giffy.network.core.client.ServerResponse;
 
 /**
@@ -9,9 +9,9 @@ import org.almiso.giffy.network.core.client.ServerResponse;
 public class DefaultRequestParser implements RequestParser {
 
     @Override
-    public TaskResponse parse(ServerResponse serverResponse, Class<? extends TaskResponse> responseClass) throws ParseException {
+    public JobResponse parse(ServerResponse serverResponse, Class<? extends JobResponse> responseClass) throws ParseException {
         try {
-            TaskResponse response = responseClass.newInstance();
+            JobResponse response = responseClass.newInstance();
             return response.parse(serverResponse);
         } catch (InstantiationException e) {
             e.printStackTrace();

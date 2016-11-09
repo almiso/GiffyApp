@@ -1,8 +1,8 @@
 package org.almiso.giffy.di.network;
 
 
-import org.almiso.giffy.network.core.manager.TaskManager;
-import org.almiso.giffy.network.realisation.manager.GiffyNetworkTaskManager;
+import org.almiso.giffy.network.core.manager.JobManager;
+import org.almiso.giffy.network.implementation.manager.GiffyNetworkJobManager;
 
 import javax.inject.Singleton;
 
@@ -14,7 +14,7 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    TaskManager providesTaskManager() {
-        return new GiffyNetworkTaskManager();
+    JobManager providesTaskManager() {
+        return new GiffyNetworkJobManager();
     }
 }

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import org.almiso.giffy.R;
-import org.almiso.giffy.network.core.task.TaskProgressInterface;
+import org.almiso.giffy.network.core.job.JobProgressState;
 import org.almiso.giffy.utils.Logger;
 
 public class BaseActivity extends AppCompatActivity {
@@ -56,15 +56,15 @@ public class BaseActivity extends AppCompatActivity {
         progressDialog = null;
     }
 
-    protected TaskProgressInterface getTaskProgressInterface() {
-        return new TaskProgressInterface() {
+    protected JobProgressState getTaskProgressInterface() {
+        return new JobProgressState() {
             @Override
-            public void showProgress() {
+            public void onStart() {
                 needShowProgress();
             }
 
             @Override
-            public void hideProgress() {
+            public void onFinish() {
                 needHideProgress();
             }
         };
