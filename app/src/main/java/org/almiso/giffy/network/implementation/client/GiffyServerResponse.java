@@ -1,7 +1,7 @@
 package org.almiso.giffy.network.implementation.client;
 
 
-import org.almiso.giffy.network.core.parser.ParseException;
+import org.almiso.giffy.network.core.exceprion.ParseException;
 import org.almiso.giffy.network.core.client.ServerResponse;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class GiffyServerResponse implements ServerResponse<Response> {
             return response.body().string();
         } catch (IOException e) {
             e.printStackTrace();
-            throw new ParseException();
+            throw new ParseException(e);
         }
     }
 

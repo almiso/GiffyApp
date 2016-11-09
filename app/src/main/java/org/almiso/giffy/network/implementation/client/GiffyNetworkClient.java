@@ -4,10 +4,12 @@ package org.almiso.giffy.network.implementation.client;
 import android.support.annotation.NonNull;
 
 import org.almiso.giffy.network.core.client.NetworkClient;
+import org.almiso.giffy.network.core.client.ServerCallback;
+import org.almiso.giffy.network.core.exceprion.BadUrlException;
+import org.almiso.giffy.network.core.exceprion.HttpException;
 import org.almiso.giffy.network.core.request.NetworkRequest;
 import org.almiso.giffy.network.core.request.NetworkRequestHeadersEntity;
 import org.almiso.giffy.network.core.request.NetworkRequestParamsEntry;
-import org.almiso.giffy.network.core.client.ServerCallback;
 import org.almiso.giffy.network.core.util.UrlBuilder;
 import org.almiso.giffy.network.implementation.util.GiffyUrlBuilder;
 import org.almiso.giffy.utils.Constants;
@@ -50,7 +52,7 @@ public class GiffyNetworkClient implements NetworkClient {
             url = urlBuilder.createUrl();
         } catch (MalformedURLException | IllegalArgumentException e) {
             e.printStackTrace();
-            callback.onServerError(e);
+            callback.onServerError(new BadUrlException(e));
             return;
         }
 
@@ -66,7 +68,7 @@ public class GiffyNetworkClient implements NetworkClient {
             callback.onServerSuccess(new GiffyServerResponse(response));
         } catch (IOException e) {
             e.printStackTrace();
-            callback.onServerError(e);
+            callback.onServerError(new HttpException(e));
         }
     }
 
