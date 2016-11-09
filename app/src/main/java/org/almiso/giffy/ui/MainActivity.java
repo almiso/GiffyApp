@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initData() {
-        GiffyApplication.getNetworkComponent().inject(this);
+        GiffyApplication.getComponentController().getNetworkComponent().inject(this);
     }
 
     /* Private methods */

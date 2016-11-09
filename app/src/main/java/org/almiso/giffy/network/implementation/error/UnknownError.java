@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import org.almiso.giffy.R;
+import org.almiso.giffy.core.ComponentController;
 import org.almiso.giffy.core.GiffyApplication;
 import org.almiso.giffy.network.core.job.JobError;
 
@@ -20,7 +21,7 @@ public class UnknownError implements JobError<Throwable> {
     public UnknownError(@NonNull Throwable throwable) {
         this.throwable = throwable;
 
-        GiffyApplication.getAppComponent().inject(this);
+        GiffyApplication.getComponentController().getAppComponent().inject(this);
     }
 
     @Override
