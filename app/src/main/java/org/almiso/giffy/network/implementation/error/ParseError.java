@@ -21,7 +21,7 @@ public class ParseError implements JobError<ParseException> {
     public ParseError(@NonNull ParseException exception) {
         this.exception = exception;
 
-        GiffyApplication.getAppComponent().inject(this);
+        GiffyApplication.getComponentController().getAppComponent().inject(this);
     }
 
     @Override

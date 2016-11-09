@@ -21,7 +21,7 @@ public class BadUrlError implements JobError<BadUrlException> {
     public BadUrlError(@NonNull BadUrlException exception) {
         this.exception = exception;
 
-        GiffyApplication.getAppComponent().inject(this);
+        GiffyApplication.getComponentController().getAppComponent().inject(this);
     }
 
     @Override

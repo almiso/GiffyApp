@@ -80,7 +80,7 @@ public abstract class GiffyNetworkRequest implements NetworkRequest {
         this.attempts = DEFAULT_USED_ATTEMPTS_COUNT;
         this.looper = Looper.getMainLooper();
 
-        prepareInjection(GiffyApplication.getRequestComponent());
+        prepareInjection(GiffyApplication.getComponentController().getRequestComponent());
     }
 
     /* Override methods */

@@ -29,8 +29,6 @@ public class GetRandomJoke extends GiffyNetworkRequest {
     @Inject
     NetworkRequestHeaders networkRequestHeaders;
 
-
-
     /* Override methods */
 
     @Override
@@ -40,8 +38,7 @@ public class GetRandomJoke extends GiffyNetworkRequest {
 
     @Override
     public NetworkRequestPath getRequestPath() {
-//        return new GiffyNetworkRequestPath("api.icndb.com", "jokes/random");
-        return new GiffyNetworkRequestPath("api.icndb.co", "jokes/random");
+        return new GiffyNetworkRequestPath("api.icndb.com", "jokes/random");
     }
 
     @Override

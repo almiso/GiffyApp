@@ -14,12 +14,9 @@ public class ResponseParser implements Parser {
         try {
             JobResponse response = responseClass.newInstance();
             return response.parse(serverResponse);
-        } catch (InstantiationException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             throw new ParseException(e);
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-            throw new ParseException(ex);
         }
     }
 }

@@ -21,7 +21,7 @@ public class HttpError implements JobError<HttpException> {
     public HttpError(@NonNull HttpException exception) {
         this.exception = exception;
 
-        GiffyApplication.getAppComponent().inject(this);
+        GiffyApplication.getComponentController().getAppComponent().inject(this);
     }
 
     @Override
