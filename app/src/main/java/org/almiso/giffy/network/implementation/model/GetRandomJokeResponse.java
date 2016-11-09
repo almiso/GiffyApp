@@ -3,9 +3,8 @@ package org.almiso.giffy.network.implementation.model;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
-import org.almiso.giffy.network.core.exceprion.ParseException;
-import org.almiso.giffy.network.core.job.JobResponse;
 import org.almiso.giffy.network.core.client.ServerResponse;
+import org.almiso.giffy.network.core.job.JobResponse;
 
 public class GetRandomJokeResponse implements JobResponse {
 
@@ -17,7 +16,7 @@ public class GetRandomJokeResponse implements JobResponse {
     }
 
     @Override
-    public JobResponse parse(ServerResponse serverResponse) throws ParseException {
+    public JobResponse parse(ServerResponse serverResponse) throws Exception {
         return new GsonBuilder().create().fromJson(serverResponse.getResponseString(), GetRandomJokeResponse.class);
     }
 }

@@ -9,14 +9,36 @@ public class GiffyNetworkRequestPath implements NetworkRequestPath {
     private String authority;
     private String path;
 
-    public GiffyNetworkRequestPath(String authority, String path) {
-        this("http", authority, path);
+    private GiffyNetworkRequestPath() {
+        this.scheme = "http";
+        this.authority = "";
+        this.path = "";
     }
 
-    public GiffyNetworkRequestPath(String scheme, String authority, String path) {
-        this.scheme = scheme;
-        this.authority = authority;
-        this.path = path;
+    public static Builder newBuilder() {
+        return new GiffyNetworkRequestPath().new Builder();
+    }
+
+    public class Builder {
+
+        public Builder setScheme(String scheme) {
+            GiffyNetworkRequestPath.this.scheme = scheme;
+            return this;
+        }
+
+        public Builder setAuthority(String authority) {
+            GiffyNetworkRequestPath.this.authority = authority;
+            return this;
+        }
+
+        public Builder setPath(String path) {
+            GiffyNetworkRequestPath.this.path = path;
+            return this;
+        }
+
+        public GiffyNetworkRequestPath build() {
+            return GiffyNetworkRequestPath.this;
+        }
     }
 
     @Override

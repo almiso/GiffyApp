@@ -38,7 +38,11 @@ public class GetRandomJoke extends GiffyNetworkRequest {
 
     @Override
     public NetworkRequestPath getRequestPath() {
-        return new GiffyNetworkRequestPath("api.icndb.com", "jokes/random");
+        return GiffyNetworkRequestPath.newBuilder()
+                .setScheme("http")
+                .setAuthority("api.icndb.com")
+                .setPath("jokes/random")
+                .build();
     }
 
     @Override
