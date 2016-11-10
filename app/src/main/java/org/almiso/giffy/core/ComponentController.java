@@ -23,7 +23,7 @@ public class ComponentController {
 
     /* Constructor */
 
-    ComponentController(GiffyApplication application) {
+    public ComponentController(GiffyApplication application) {
         this.application = application;
     }
 

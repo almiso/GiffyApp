@@ -10,7 +10,7 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "org.almiso.giffy.test.core.TestRunner"
     }
     buildTypes {
         release {
@@ -20,7 +20,13 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
+
+    /* base*/
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -50,7 +56,16 @@ dependencies {
     /* Required for instrumented tests */
     androidTestCompile 'com.android.support:support-annotations:25.0.0'
     androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'junit:junit:4.12'
+    androidTestCompile 'org.mockito:mockito-core:1.10.19'
+    androidTestCompile "com.github.crittercism.dexmaker:dexmaker-parent:f8e7c23e4172af8767758c99c9165dd2bd4f0e7f"
+    androidTestCompile "com.github.crittercism.dexmaker:dexmaker-mockito:f8e7c23e4172af8767758c99c9165dd2bd4f0e7f"
+    androidTestCompile "com.github.crittercism.dexmaker:dexmaker-dx:f8e7c23e4172af8767758c99c9165dd2bd4f0e7f"
+    androidTestCompile "com.github.crittercism.dexmaker:dexmaker:f8e7c23e4172af8767758c99c9165dd2bd4f0e7f"
+
     apt 'com.google.dagger:dagger-compiler:2.7'
     compile 'com.google.dagger:dagger:2.7'
     provided 'javax.annotation:jsr250-api:1.0'
+    androidTestApt 'com.google.dagger:dagger-compiler:2.7'
+    testApt 'com.google.dagger:dagger-compiler:2.7'
 }
